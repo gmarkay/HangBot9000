@@ -15,6 +15,48 @@ ul{
     margin: 10px;
     padding: 6px;
   }
-  #myCanvas{
-    margin-bottom: 50px;
+  #container {
+    width: 38rem;
+    height: 25rem;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    /* background: blue; */
+    /* opacity: .4; */
+
+    border: 1px solid black;
+  }
+
+  .border { background: silver; position: absolute; }
+  .borderh { height: 0px; border: 1px solid black; }
+  .borderv { width: 0px; border: 1px solid black; }
+
+  #foot {   
+    left: 11%;
+    top: 95%;
+    width: 23%; 
+    height: .5%;
+  }  
+  #trunk {
+    left: 22%;
+    bottom: 4%;
+    height: 74%;
+    width: .5%;
+  }
+  #headholder {   
+    right: 0px; bottom: 0px;
+  }
+
+  #content {
+    border: 1px solid black;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      /* border-divs are 0px wide with 1px border all around, thus have a width & height of 2px (twice the border-width) -- 2 border-divs = 4 less pixels for the content ! */
+      width: 316px;
+      height: 236px;
+      background: lightslategray;
+      overflow: auto;
+      text-shadow: 0 0 1px #555;
+      text-align: justify;
   }

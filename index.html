@@ -2,27 +2,19 @@
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
 
 </head>
 
-<body>
-  <input type="text" id='guessLetter'>
-  <canvas id="myCanvas" width="400px" height="300px">
-  </canvas>
-  <div id='guessArea'>
-    <p id='wrongLetters'></p>
-    <ul id='wordArea'></ul>
+<body ng-app='Hangman'>
+      <div class="col-xs-10 col-xs-offset-1 main-container">
+          <link rel="stylesheet" type="text/css" href="css/main.css">
 
-  </div>
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-
-  <script src="app.js"></script>
-
+        <div ng-view></div>
+    </div>
+  <script type="text/javascript" src="lib/node_modules/angular/angular.min.js"></script>
+  <script type="text/javascript" src="lib/node_modules/angular-route/angular-route.min.js"></script>
+  <script type="text/javascript" src="app/app.js"></script>
+  <script src='app/controllers/gameCtrl.js'></script>
 </body>
 
 </html>
