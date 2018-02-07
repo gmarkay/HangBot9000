@@ -6,8 +6,17 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
   var canvas = document.getElementById('myCanvas');
   var ctx = canvas.getContext("2d");
 
+  $scope.clearBoard = () =>{
+    $scope.showButtons = true;
+    $scope.hideButton = true;
+    $scope.showGame = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    $scope.dashArr = [];
+    $scope.wrongGuesses = [];
+
+  };
+
   $scope.initialize = (diff) => {
-    $scope.showButton = true;
     let minLength;
     let maxLength;
     if (diff === 'easy') {
@@ -23,19 +32,16 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
     $scope.showButtons = false;
     $scope.showGame = true;
     GameFactory.getWord(minLength, maxLength)
-      .then(retWord => {
-        $scope.word = retWord;
+      .then(gameWord => {
+        $scope.word = gameWord;
         buildGuessArea($scope.word);
-
+        console.log(gameWord);
       });
     buildGameArea();
   };
 
   function buildGameArea() {
-    $scope.showButtons = false;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    $scope.dashArr = [];
-    $scope.wrongGuesses = [];
+  
 
     ctx.beginPath();
     //foot
@@ -72,6 +78,7 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
 
     if (e.which === 13) {
       word = word.toLowerCase();
+
       let wordArr = word.split('');
       if ($scope.guess === undefined || $scope.guess === '') {
         console.log('fail', $scope.guess);
@@ -92,31 +99,30 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
           $scope.wrongGuesses.push($scope.guess);
         }
         let failures = $scope.wrongGuesses.length;
-        draw(failures);
+        draw(failures, word);
       }
 
       $scope.guess = '';
       if ($scope.dashArr.join('') == word) {
-        end('win');
+        end('win', word);
       }
     }
   };
 
-  function end(condition) {
+  function end(condition, theWord) {
+    console.log(theWord, 'in end');
     $timeout(function () {
       if (condition == 'win') {
         $window.alert('You win Congratulations');
       } else {
-        $window.alert('You fail');
-
+        $window.alert(`You failed to guess ${theWord}`);
       }
-      $scope.showButton = false;
+      $scope.hideButton = false;
       $scope.button = 'Play again';
     }, 500);
   }
 
-  function draw(part, counter) {
-
+  function draw(part, word) {
     switch (part) {
       case 1:
         //circle
@@ -148,7 +154,6 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
         ctx.lineTo(110, 270);
         ctx.stroke();
         $window.alert('Three More Guess');
-
         break;
       case 6:
         //leg 2
@@ -156,7 +161,6 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
         ctx.lineTo(190, 270);
         ctx.stroke();
         $window.alert('Two More Guesses');
-
         break;
       case 7:
         //eyes
@@ -173,7 +177,7 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
         ctx.moveTo(163, 135);
         ctx.arc(153, 135, 11, 0, Math.PI, true);
         ctx.stroke();
-        end('fail');
+        end('fail', word);
         break;
     }
   }
