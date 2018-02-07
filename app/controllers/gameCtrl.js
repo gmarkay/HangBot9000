@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, $window, $timeout) {
-
-
-
+  
   $scope.button = 'Start Game';
   var canvas = document.getElementById('myCanvas');
   var ctx = canvas.getContext("2d");
