@@ -1,15 +1,38 @@
 'use strict';
 
-angular.module('Hangman').controller('GameCtrl', function ($scope, $window, $timeout) {
-
-
-  var word = 'sap';
-  $scope.wordArr = word.split('');
-
+angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, $window, $timeout) {
+  
+  $scope.button = 'Start Game';
   var canvas = document.getElementById('myCanvas');
   var ctx = canvas.getContext("2d");
 
-  $scope.buildGameArea = () => {
+  $scope.initialize = (diff) => {
+    $scope.showButton = true;
+    let minLength;
+    let maxLength;
+    if (diff === 'easy') {
+      minLength = 3;
+      maxLength = 5;
+    } else if (diff === 'med') {
+      minLength = 5;
+      maxLength = 8;
+    } else if (diff === 'hard') {
+      minLength = 7;
+      maxLength = 12;
+    }
+    $scope.showButtons = false;
+    $scope.showGame = true;
+    GameFactory.getWord(minLength, maxLength)
+      .then(retWord => {
+        $scope.word = retWord;
+        buildGuessArea($scope.word);
+
+      });
+    buildGameArea();
+  };
+
+  function buildGameArea() {
+    $scope.showButtons = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     $scope.dashArr = [];
     $scope.wrongGuesses = [];
@@ -33,26 +56,31 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, $window, $tim
     ctx.moveTo(150, 40);
     ctx.lineTo(150, 70);
     ctx.stroke();
-  };
+  }
 
-  $scope.buildGuessArea = () => {
+  function buildGuessArea(word) {
     for (let i = 0; i < word.length; i++) {
-      $scope.dashArr.push('-');
+      if (word[i] === '-') {
+        $scope.dashArr.push('-');
+      } else {
+        $scope.dashArr.push('_');
+      }
     }
-    console.log($scope.dashArr, 'dashes');
-  };
+  }
 
-  $scope.guesssLetter = function (e) {
-    // return new Promise((resolve, reject)=>{
+  $scope.guesssLetter = function (e, word) {
+
     if (e.which === 13) {
+      word = word.toLowerCase();
+      let wordArr = word.split('');
       if ($scope.guess === undefined || $scope.guess === '') {
         console.log('fail', $scope.guess);
       } else if ($scope.dashArr.includes($scope.guess) || $scope.wrongGuesses.includes($scope.guess)) {
         $window.alert(`You already guessed "${$scope.guess}". Guess Again`);
       } else {
         let correctGuess = [];
-        for (let i = 0; i < $scope.wordArr.length; i++) {
-          if ($scope.wordArr[i] === $scope.guess) {
+        for (let i = 0; i < wordArr.length; i++) {
+          if (wordArr[i] === $scope.guess) {
             correctGuess.push(i);
           }
         }
@@ -60,7 +88,7 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, $window, $tim
           $scope.dashArr[index] = $scope.guess;
 
         });
-        if (!$scope.wordArr.includes($scope.guess)) {
+        if (!wordArr.includes($scope.guess)) {
           $scope.wrongGuesses.push($scope.guess);
         }
         let failures = $scope.wrongGuesses.length;
@@ -80,13 +108,11 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, $window, $tim
         $window.alert('You win Congratulations');
       } else {
         $window.alert('You fail');
-  
-      }
-      $scope.dashArr = [];
-      $scope.wrongGuesses = [];
-      $scope.showGame = false;
-    }, 500);
 
+      }
+      $scope.showButton = false;
+      $scope.button = 'Play again';
+    }, 500);
   }
 
   function draw(part, counter) {

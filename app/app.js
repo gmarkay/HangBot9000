@@ -6,5 +6,4 @@ angular.module('Hangman', ['ngRoute'])
     templateUrl: 'partials/game.html',
     controller: 'GameCtrl'
   });
-  
 });

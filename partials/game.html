@@ -1,13 +1,19 @@
-<button ng-click='buildGameArea(); buildGuessArea(); showGame=true' ng-show='!showGame'>
-  Start Game
+<button ng-click='showButtons=true' ng-hide='showButton'>
+{{button}}
 </button>
 
+<div ng-show='showButtons'>
+  <h3 >Select your difficulty</h3>
+  <button ng-click="initialize('easy')">Easy</button>
+  <button ng-click="initialize('med')">Medium</button>
+  <button ng-click="initialize('hard')">Hard</button>
+</div>
 <div ng-show='showGame'>
   <canvas id="myCanvas" width="400px" height="300px">
 
   </canvas>
 
-  <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)">
+  <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)">
 
   <div id='wrong'>
     <li ng-repeat='fail in wrongGuesses '>
