@@ -1,0 +1,22 @@
+<button ng-click='buildGameArea(); buildGuessArea(); showGame=true' ng-show='!showGame'>
+  Start Game
+</button>
+
+<div ng-show='showGame'>
+  <canvas id="myCanvas" width="400px" height="300px">
+
+  </canvas>
+
+  <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)">
+
+  <div id='wrong'>
+    <li ng-repeat='fail in wrongGuesses '>
+      {{fail}}
+    </li>
+  </div>
+
+  <ul id='wordArea'>
+    <li ng-repeat='row in dashArr track by $index' ng-model='victory' ng-change='victory()'>{{row}}</li>
+
+  </ul>
+</div>
