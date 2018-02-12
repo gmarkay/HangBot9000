@@ -14,7 +14,9 @@
   </canvas>
 
   <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)">
-
+  
+  <button ng-click='botGuessLetter(word)'>Guess a letter</button>
+  
   <div id='wrong'>
     <li ng-repeat='fail in wrongGuesses '>
       {{fail}}
