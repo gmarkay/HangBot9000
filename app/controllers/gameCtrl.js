@@ -23,9 +23,9 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
     $scope.showButtons = false;
     $scope.showGame = true;
     GameFactory.getWord(minLength, maxLength)
-      .then(retWord => {
-        $scope.word = retWord;
-        buildGuessArea($scope.word);
+      .then(randWord => {
+        $scope.word = randWord;
+        buildGuessArea();
 
       });
     buildGameArea();
@@ -59,10 +59,11 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
   }
 
 
-  function buildGuessArea(word) {
+  function buildGuessArea() {
+    console.log($scope.word);
     //creating word guessing area with dashes subbed for letters
-    for (let i = 0; i < word.length; i++) {
-      if (word[i] === '-') {
+    for (let i = 0; i < $scope.word.length; i++) {
+      if ($scope.word[i] === '-') {
         $scope.dashArr.push('-');
       } else {
         $scope.dashArr.push('_');
@@ -70,55 +71,53 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
     }
   }
 
-  //tracked number of letters guessed for bot guess
+  //tracked number of letters guessed by bot
   let guessed = 0;
-  // track the nubmer of correctly guessed letters
-  let correctLetter = [];
-  $scope.botGuessLetter = (word) => {
-    // let wordLength = $scope.dashArr.length;
-    word = word.toLowerCase();
-    let wordArr = word.split('');
-    let correctGuess = [];
-    // if(correctLetter.length < 2){
-    console.log(guessed, guessed);
-    $scope.guess = getBotGuess(guessed, $scope.dashArr.length);
-    // }else{
-    //   console.log('you have to correct guesses');
-    // }
 
-    //if guess is correct
+  $scope.botGuessLetter = () => {
+    let word = $scope.word.toLowerCase();
+    let wordArr = word.split('');
+    if(guessed <4){
+    $scope.guess = getBotGuess(guessed, $scope.dashArr.length);
+    }else{
+       GameFactory.makeGuess(convertUrlString(), $scope.dashArr, $scope.wrongGuesses)
+       .then((highestVal)=>{
+        $scope.guess = highestVal;
+       });
+    }
+    if(wordArr.includes($scope.guess)){
+      guessCorrect(wordArr);
+    }else{    
+      guessWrong();
+    }
+    $scope.guess = '';
+    if ($scope.dashArr.join('') == $scope.word) {
+      end('win');
+    }
+    guessed++;
+  };
+  function guessCorrect(wordArr) {
+    let correctGuess = [];
+    //find index of wordarray where guess matches word
     for (let i = 0; i < wordArr.length; i++) {
       if (wordArr[i] === $scope.guess) {
         correctGuess.push(i);
-        correctLetter.push(i);
       }
     }
-    //add correct letter to dash array in game
+    //add correct letter to dash array at index in word
     correctGuess.forEach((index) => {
       $scope.dashArr[index] = $scope.guess;
-
     });
-    //if guess is wrong, add to array
-    if (!wordArr.includes($scope.guess)) {
-      $scope.wrongGuesses.push($scope.guess);
-    }
+  }
+
+  function guessWrong(){
+    //add wrong guess to wrong array and then draw bodypart
+    $scope.wrongGuesses.push($scope.guess);
     let failures = $scope.wrongGuesses.length;
     draw(failures);
 
-
-    $scope.guess = '';
-    if ($scope.dashArr.join('') == word) {
-      end('win');
-    }
-    guessed++
-    // GameFactory.makeGuess(dashArr);
-
-    // console.log($scope.dashArr, 'what?');
-    // guessedArr.push($scope.dashArr);
-    // console.log(guessedArr, 'guessed arr')
-    // $scope.guess = botGuess;
-  };
-
+  }
+  
   //initial guesses for bot based on letter probability
   function getBotGuess(guessed, length) {
     let botGuess;
@@ -165,6 +164,20 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
     return botGuess;
   }
 
+   //format word pattern for api url
+   function convertUrlString(){
+    let guessPtrn =[];
+    $scope.dashArr.forEach((letter, i) => {
+      if (letter === '_') {
+        guessPtrn.push('%3F');
+      } else {
+        guessPtrn.push(letter);
+      }
+    });
+    let guessString = guessPtrn.join('');
+    return guessString;
+  }
+
 
   /*
       $scope.guesssLetter = function (e, word) {
@@ -206,10 +219,9 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
       }; 
       */
 
-
-
   function end(condition) {
     $timeout(function () {
+      guessed = 0;
       if (condition == 'win') {
         $window.alert('You win Congratulations');
       } else {
@@ -227,7 +239,7 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
 
     switch (part) {
       case 1:
-        //circle
+        //head
         ctx.moveTo(185, 110);
         ctx.arc(150, 110, 34, 0, 2 * Math.PI);
         ctx.stroke();
@@ -278,6 +290,7 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
         $window.alert('One More Guess');
         break;
       case 8:
+        //mouth
         ctx.moveTo(163, 135);
         ctx.arc(153, 135, 11, 0, Math.PI, true);
         ctx.stroke();
