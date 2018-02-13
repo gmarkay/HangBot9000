@@ -53,7 +53,6 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
     });
     deleteNaN(alphabet);
     let highest = Object.keys(alphabet).reduce((a, b) => alphabet[a] > alphabet[b] ? a : b);
-
     return highest;
   }
 
@@ -68,36 +67,5 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
     });
   }
 
-  // function provideWord(){
-
-  // }
-  function buildhangguy(ctx, canvas) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.beginPath();
-    //foot
-    ctx.moveTo(0, 300);
-    ctx.lineTo(60, 300);
-    ctx.stroke();
-    //main trunk
-    ctx.moveTo(30, 40);
-    ctx.lineTo(30, 400);
-    ctx.stroke();
-
-    //line accross top
-    ctx.moveTo(30, 40);
-    ctx.lineTo(150, 40);
-    ctx.stroke();
-
-    //head holder
-    ctx.moveTo(150, 40);
-    ctx.lineTo(150, 70);
-    ctx.stroke();
-  }
-  // function buildGuessArea(){
-
-
-  // }
-
-  return { getWord, makeGuess, buildhangguy };
+  return { getWord, makeGuess };
 });

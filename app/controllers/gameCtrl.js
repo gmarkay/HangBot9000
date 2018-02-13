@@ -2,176 +2,148 @@
 
 angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, $window, $timeout) {
 
-  $scope.button = 'Start Game';
-  var canvas = document.getElementById('myCanvas');
-  var ctx = canvas.getContext("2d");
 
-
-
-  $scope.$on('initialized', function(){
+$scope.initialize = (diff) => {
+    $scope.showButton = true;
+    let minLength;
+    let maxLength;
+    if (diff === 'easy') {
+      minLength = 4;
+      maxLength = 6;
+    } else if (diff === 'med') {
+      minLength = 6;
+      maxLength = 9;
+    } else if (diff === 'hard') {
+      minLength = 9;
+      maxLength = 12;
+    }
     $scope.showButtons = false;
-    $scope.wrongGuesses = [];
-    GameFactory.buildhangguy(ctx, canvas);
-    
+    $scope.showGame = true;
+    GameFactory.getWord(minLength, maxLength)
+      .then(randWord => {
+        $scope.word = randWord;
+        $scope.dashArr = [];
+        $scope.botDashArr =[];
+        buildGuessArea();
+        $scope.$broadcast('initialized');
+      });
+  };
+  function buildGuessArea() {
 
-  });
+    console.log($scope.word);
+    //creating word guessing area with dashes subbed for letters
+    for (let i = 0; i < $scope.word.length; i++) {
+      if ($scope.word[i] !=='-') {
+        $scope.dashArr.push('_');
+        $scope.botDashArr.push('_');
+      }
+    }
+  }
 
-  // function buildGameArea() {
+  $scope.buildGallows = (context, canvas) => {
+    // let context ='';
+    // if(player === 'user'){
+    //    context = ctx;
+    // }
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
-  // }
+    context.beginPath();
+    //foot
+    context.moveTo(0, 300);
+    context.lineTo(60, 300);
+    context.stroke();
+    //main trunk
+    context.moveTo(30, 40);
+    context.lineTo(30, 400);
+    context.stroke();
 
+    //line accross top
+    context.moveTo(30, 40);
+    context.lineTo(150, 40);
+    context.stroke();
 
-
-
-  //tracked number of letters guessed by bot
-  // let guessed = 0;
-
-  // $scope.botGuessLetter = () => {
-  //   let word = $scope.word.toLowerCase();
-  //   let wordArr = word.split('');
-  //   if(guessed <4){
-  //   $scope.guess = getBotGuess(guessed, $scope.dashArr.length);
-  //   }else{
-  //      GameFactory.makeGuess(convertUrlString(), $scope.dashArr, $scope.wrongGuesses)
-  //      .then((highestVal)=>{
-  //       $scope.guess = highestVal;
-  //      });
-  //   }
-  //   if(wordArr.includes($scope.guess)){
-  //     guessCorrect(wordArr);
-  //   }else{    
-  //     guessWrong();
-  //   }
-  //   $scope.guess = '';
-  //   if ($scope.dashArr.join('') == $scope.word) {
-  //     end('win');
-  //   }
-  //   guessed++;
-  // };
-  // function guessCorrect(wordArr) {
-  //   let correctGuess = [];
-  //   //find index of wordarray where guess matches word
-  //   for (let i = 0; i < wordArr.length; i++) {
-  //     if (wordArr[i] === $scope.guess) {
-  //       correctGuess.push(i);
-  //     }
-  //   }
-  //   //add correct letter to dash array at index in word
-  //   correctGuess.forEach((index) => {
-  //     $scope.dashArr[index] = $scope.guess;
-  //   });
-  // }
-
-  // function guessWrong(){
-  //   //add wrong guess to wrong array and then draw bodypart
-  //   $scope.wrongGuesses.push($scope.guess);
-  //   let failures = $scope.wrongGuesses.length;
-  //   draw(failures);
-
-  // }
-  
-  // //initial guesses for bot based on letter probability
-  // function getBotGuess(guessed, length) {
-  //   let botGuess;
-  //   switch (guessed) {
-  //     case 0:
-  //       if (length === 4) {
-  //         botGuess = 'a';
-  //       }
-  //       else if (length === 5) {
-  //         botGuess = 's';
-  //       } else {
-  //         botGuess = 'e';
-  //       }
-  //       break;
-  //     case 1:
-  //       if (length === 4 || length === 5) {
-  //         botGuess = 'e';
-  //       } else if (length === 6) {
-  //         botGuess = 'a';
-  //       } else {
-  //         botGuess = 'i';
-  //       }
-  //       break;
-  //     case 2:
-  //       if (length === 4 || length > 9) {
-  //         botGuess = 'o';
-  //       } else if (length === 6) {
-  //         botGuess = 'i';
-  //       } else {
-  //         botGuess = 'a';
-  //       }
-  //       break;
-  //     case 3:
-  //       if (length === 4) {
-  //         botGuess = 'i';
-
-  //       } else if (length < 10 && length > 4) {
-  //         botGuess = 'o';
-  //       } else {
-  //         botGuess = 'a';
-  //       }
-  //       break;
-  //   }
-  //   return botGuess;
-  // }
-
-  //  //format word pattern for api url
-  //  function convertUrlString(){
-  //   let guessPtrn =[];
-  //   $scope.dashArr.forEach((letter, i) => {
-  //     if (letter === '_') {
-  //       guessPtrn.push('%3F');
-  //     } else {
-  //       guessPtrn.push(letter);
-  //     }
-  //   });
-  //   let guessString = guessPtrn.join('');
-  //   return guessString;
-  // }
+    //head holder
+    context.moveTo(150, 40);
+    context.lineTo(150, 70);
+    context.stroke();
+  };
 
 
-      $scope.guesssLetter = function (e) {    
-        if (e.which === 13) {
-         let word = $scope.word.toLowerCase();
-          let wordArr = word.split('');
-          if ($scope.guess === undefined || $scope.guess === '') {
-            console.log('fail', $scope.guess);
-          } else if ($scope.dashArr.includes($scope.guess) || $scope.wrongGuesses.includes($scope.guess)) {
-            $window.alert(`You already guessed "${$scope.guess}". Guess Again`);
-          } else {
-            let correctGuess = [];
-            for (let i = 0; i < wordArr.length; i++) {
-              if (wordArr[i] === $scope.guess) {
-                correctGuess.push(i);
-              }
-            }
-            correctGuess.forEach((index) => {
-              $scope.dashArr[index] = $scope.guess;
-    
-            });
-            if (!wordArr.includes($scope.guess)) {
-              $scope.wrongGuesses.push($scope.guess);
-            }
-            let failures = $scope.wrongGuesses.length;
-            draw(failures);
-        
-          }
-    
-          $scope.guess = '';
-          if ($scope.dashArr.join('') == word) {
-            end('win');
-          }
-        }
-    
-      }; 
-    
 
-  function end(condition) {
+  $scope.draw = (part, context) => {
+
+    switch (part) {
+      case 1:
+        //head
+        context.moveTo(185, 110);
+        context.arc(150, 110, 34, 0, 2 * Math.PI);
+        context.stroke();
+        break;
+      case 2:
+        //body
+        context.moveTo(150, 143);
+        context.lineTo(150, 215);
+        context.stroke();
+        break;
+      case 3:
+        //arm 1
+        context.moveTo(150, 175);
+        context.lineTo(120, 150);
+        context.stroke();
+        break;
+      case 4:
+        //arm 2
+        context.moveTo(150, 175);
+        context.lineTo(180, 150);
+        context.stroke();
+        break;
+      case 5:
+        //leg 1
+        context.moveTo(150, 215);
+        context.lineTo(110, 270);
+        context.stroke();
+        // $window.alert('Three More Guess');
+
+        break;
+      case 6:
+        //leg 2
+        context.moveTo(150, 215);
+        context.lineTo(190, 270);
+        context.stroke();
+        // $window.alert('Two More Guesses');
+
+        break;
+      case 7:
+        //eyes
+        context.moveTo(147, 105);
+        context.arc(139, 105, 8, 0, 2 * Math.PI);
+        context.stroke();
+
+        context.moveTo(173, 105);
+        context.arc(165, 105, 8, 0, 2 * Math.PI);
+        context.stroke();
+        // $window.alert('One More Guess');
+        break;
+      case 8:
+        //mouth
+        context.moveTo(163, 135);
+        context.arc(153, 135, 11, 0, Math.PI, true);
+        context.stroke();
+        // end('fail');
+        break;
+    }
+  };
+
+
+  $scope.end = (condition, player) => {
     $timeout(function () {
       // letguessed = 0;
       if (condition == 'win') {
+        if(player === 'user'){
         $window.alert('You win Congratulations');
+        }else if(player === 'bot'){
+          $window.alert('Hangbot9000 beat you');
+        }
       } else {
         $window.alert('You fail');
 
@@ -179,71 +151,5 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
       $scope.showButton = false;
       $scope.button = 'Play again';
     }, 500);
-  }
-
-
-
-  function draw(part, counter) {
-
-    switch (part) {
-      case 1:
-        //head
-        ctx.moveTo(185, 110);
-        ctx.arc(150, 110, 34, 0, 2 * Math.PI);
-        ctx.stroke();
-        break;
-      case 2:
-        //body
-        ctx.moveTo(150, 143);
-        ctx.lineTo(150, 215);
-        ctx.stroke();
-        break;
-      case 3:
-        //arm 1
-        ctx.moveTo(150, 175);
-        ctx.lineTo(120, 150);
-        ctx.stroke();
-        break;
-      case 4:
-        //arm 2
-        ctx.moveTo(150, 175);
-        ctx.lineTo(180, 150);
-        ctx.stroke();
-        break;
-      case 5:
-        //leg 1
-        ctx.moveTo(150, 215);
-        ctx.lineTo(110, 270);
-        ctx.stroke();
-        $window.alert('Three More Guess');
-
-        break;
-      case 6:
-        //leg 2
-        ctx.moveTo(150, 215);
-        ctx.lineTo(190, 270);
-        ctx.stroke();
-        $window.alert('Two More Guesses');
-
-        break;
-      case 7:
-        //eyes
-        ctx.moveTo(147, 105);
-        ctx.arc(139, 105, 8, 0, 2 * Math.PI);
-        ctx.stroke();
-
-        ctx.moveTo(173, 105);
-        ctx.arc(165, 105, 8, 0, 2 * Math.PI);
-        ctx.stroke();
-        $window.alert('One More Guess');
-        break;
-      case 8:
-        //mouth
-        ctx.moveTo(163, 135);
-        ctx.arc(153, 135, 11, 0, Math.PI, true);
-        ctx.stroke();
-        end('fail');
-        break;
-    }
-  }
+  };
 });
