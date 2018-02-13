@@ -50,19 +50,4 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
     }
 
   };
-
-
-  // function end(condition) {
-  //   $timeout(function () {
-  //     // letguessed = 0;
-  //     if (condition == 'win') {
-  //       $window.alert('You win Congratulations');
-  //     } else {
-  //       $window.alert('You fail');
-
-  //     }
-  //     $scope.showButton = false;
-  //     $scope.button = 'Play again';
-  //   }, 500);
-  // }
 });
