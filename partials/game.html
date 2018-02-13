@@ -1,30 +1,46 @@
 <button ng-click='showButtons=true' ng-hide='showButton'>
-{{button}}
+  {{button}}
 </button>
 
 <div ng-show='showButtons'>
-  <h3 >Select your difficulty</h3>
+  <h3>Select your difficulty</h3>
   <button ng-click="initialize('easy')">Easy</button>
   <button ng-click="initialize('med')">Medium</button>
   <button ng-click="initialize('hard')">Hard</button>
 </div>
 <div ng-show='showGame'>
-  <canvas id="myCanvas" width="400px" height="300px">
+  <div id='userGame'>
+    <canvas id="myCanvas" width="400px" height="300px">
 
-  </canvas>
+    </canvas>
 
-  <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)">
-  
-  <button ng-click='botGuessLetter(word)'>Guess a letter</button>
-  
-  <div id='wrong'>
-    <li ng-repeat='fail in wrongGuesses '>
-      {{fail}}
-    </li>
+    <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)">
+
+    <button ng-click='botGuessLetter(word)'>Guess a letter</button>
+
+    <div id='wrong'>
+      <li ng-repeat='fail in wrongGuesses '>
+        {{fail}}
+      </li>
+    </div>
+
+    <ul id='wordArea'>
+      <li ng-repeat='row in dashArr track by $index' ng-model='victory' ng-change='victory()'>{{row}}</li>
+
+    </ul>
   </div>
 
-  <ul id='wordArea'>
-    <li ng-repeat='row in dashArr track by $index' ng-model='victory' ng-change='victory()'>{{row}}</li>
-
-  </ul>
+  <div id='botGame'>
+      <canvas id="botCanvas" width="400px" height="300px">
+        </canvas>
+        <div id='wrong'>
+            <li ng-repeat='fail in botWrongGuesses '>
+              {{fail}}
+            </li>
+          </div>
+        <ul id='botWordArea'>
+            <li ng-repeat='row in botDashArr track by $index' ng-model='victory' ng-change='victory()'>{{row}}</li>
+      
+          </ul>
+  </div>
 </div>

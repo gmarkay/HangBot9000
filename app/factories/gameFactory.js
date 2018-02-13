@@ -5,14 +5,17 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
   let wordUrl = 'http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&minCorpusCount=5&maxCorpusCount=-1&minDictionaryCount=20&maxDictionaryCount=-1';
 
   function makeGuess(urlString, wordPtrn, wrongGuesses) {
+
     return $q((resolve, reject) => {
       let guessUrl = `http://api.wordnik.com:/v4/words.json/search/${urlString}?caseSensitive=false?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&e&excludePartOfSpeech=given-name&excludePartOfSpeech=family-name&minCorpusCount=20&maxCorpusCount=-1&minDictionaryCount=20&maxDictionaryCount=-1`;
       $http
         .get(`${guessUrl}&minLength=${wordPtrn.length}&maxLength=${wordPtrn.length}&skip=0&limit=3000&api_key=${apiKey}`)
         .then(({ data }) => {
           let results = data.searchResults;
+          console.log(results);
           let filteredResults = removeGuessed(results, wrongGuesses);
           let highestVal = getHighest(wordPtrn, filteredResults);
+          console.log(highestVal);
           resolve(highestVal);
         });
     });
