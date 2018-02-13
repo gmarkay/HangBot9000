@@ -66,5 +66,9 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
     });
   }
 
+  // function provideWord(){
+    
+  // }
+
   return { getWord, makeGuess };
 });

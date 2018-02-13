@@ -1,0 +1,21 @@
+<div>
+
+    <canvas id="botCanvas" width="400px" height="300px">
+    </canvas>
+  
+    <!-- <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)"> -->
+    <button ng-click="initialize('easy')">Initialize</button>
+
+    <button ng-click='botGuessLetter(word)'>Guess a letter</button>
+    
+    <div id='wrong'>
+      <li ng-repeat='fail in wrongGuesses '>
+        {{fail}}
+      </li>
+    </div>
+  
+    <ul id='wordArea'>
+      <li ng-repeat='row in dashArr track by $index' ng-model='victory' ng-change='victory()'>{{row}}</li>
+  
+    </ul>
+  </div>

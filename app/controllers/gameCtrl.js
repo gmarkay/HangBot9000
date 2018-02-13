@@ -6,37 +6,19 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
   var canvas = document.getElementById('myCanvas');
   var ctx = canvas.getContext("2d");
 
-  $scope.initialize = (diff) => {
-    $scope.showButton = true;
-    let minLength;
-    let maxLength;
-    if (diff === 'easy') {
-      minLength = 4;
-      maxLength = 6;
-    } else if (diff === 'med') {
-      minLength = 6;
-      maxLength = 9;
-    } else if (diff === 'hard') {
-      minLength = 9;
-      maxLength = 12;
-    }
-    $scope.showButtons = false;
-    $scope.showGame = true;
-    GameFactory.getWord(minLength, maxLength)
-      .then(randWord => {
-        $scope.word = randWord;
-        buildGuessArea();
 
-      });
+
+  $scope.$on('initialized', function(){
     buildGameArea();
-  };
+    buildGuessArea();
+
+  });
 
   function buildGameArea() {
     $scope.showButtons = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     $scope.dashArr = [];
     $scope.wrongGuesses = [];
-
     ctx.beginPath();
     //foot
     ctx.moveTo(0, 300);
@@ -72,118 +54,116 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
   }
 
   //tracked number of letters guessed by bot
-  let guessed = 0;
+  // let guessed = 0;
 
-  $scope.botGuessLetter = () => {
-    let word = $scope.word.toLowerCase();
-    let wordArr = word.split('');
-    if(guessed <4){
-    $scope.guess = getBotGuess(guessed, $scope.dashArr.length);
-    }else{
-       GameFactory.makeGuess(convertUrlString(), $scope.dashArr, $scope.wrongGuesses)
-       .then((highestVal)=>{
-        $scope.guess = highestVal;
-       });
-    }
-    if(wordArr.includes($scope.guess)){
-      guessCorrect(wordArr);
-    }else{    
-      guessWrong();
-    }
-    $scope.guess = '';
-    if ($scope.dashArr.join('') == $scope.word) {
-      end('win');
-    }
-    guessed++;
-  };
-  function guessCorrect(wordArr) {
-    let correctGuess = [];
-    //find index of wordarray where guess matches word
-    for (let i = 0; i < wordArr.length; i++) {
-      if (wordArr[i] === $scope.guess) {
-        correctGuess.push(i);
-      }
-    }
-    //add correct letter to dash array at index in word
-    correctGuess.forEach((index) => {
-      $scope.dashArr[index] = $scope.guess;
-    });
-  }
+  // $scope.botGuessLetter = () => {
+  //   let word = $scope.word.toLowerCase();
+  //   let wordArr = word.split('');
+  //   if(guessed <4){
+  //   $scope.guess = getBotGuess(guessed, $scope.dashArr.length);
+  //   }else{
+  //      GameFactory.makeGuess(convertUrlString(), $scope.dashArr, $scope.wrongGuesses)
+  //      .then((highestVal)=>{
+  //       $scope.guess = highestVal;
+  //      });
+  //   }
+  //   if(wordArr.includes($scope.guess)){
+  //     guessCorrect(wordArr);
+  //   }else{    
+  //     guessWrong();
+  //   }
+  //   $scope.guess = '';
+  //   if ($scope.dashArr.join('') == $scope.word) {
+  //     end('win');
+  //   }
+  //   guessed++;
+  // };
+  // function guessCorrect(wordArr) {
+  //   let correctGuess = [];
+  //   //find index of wordarray where guess matches word
+  //   for (let i = 0; i < wordArr.length; i++) {
+  //     if (wordArr[i] === $scope.guess) {
+  //       correctGuess.push(i);
+  //     }
+  //   }
+  //   //add correct letter to dash array at index in word
+  //   correctGuess.forEach((index) => {
+  //     $scope.dashArr[index] = $scope.guess;
+  //   });
+  // }
 
-  function guessWrong(){
-    //add wrong guess to wrong array and then draw bodypart
-    $scope.wrongGuesses.push($scope.guess);
-    let failures = $scope.wrongGuesses.length;
-    draw(failures);
+  // function guessWrong(){
+  //   //add wrong guess to wrong array and then draw bodypart
+  //   $scope.wrongGuesses.push($scope.guess);
+  //   let failures = $scope.wrongGuesses.length;
+  //   draw(failures);
 
-  }
+  // }
   
-  //initial guesses for bot based on letter probability
-  function getBotGuess(guessed, length) {
-    let botGuess;
-    switch (guessed) {
-      case 0:
-        if (length === 4) {
-          botGuess = 'a';
-        }
-        else if (length === 5) {
-          botGuess = 's';
-        } else {
-          botGuess = 'e';
-        }
-        break;
-      case 1:
-        if (length === 4 || length === 5) {
-          botGuess = 'e';
-        } else if (length === 6) {
-          botGuess = 'a';
-        } else {
-          botGuess = 'i';
-        }
-        break;
-      case 2:
-        if (length === 4 || length > 9) {
-          botGuess = 'o';
-        } else if (length === 6) {
-          botGuess = 'i';
-        } else {
-          botGuess = 'a';
-        }
-        break;
-      case 3:
-        if (length === 4) {
-          botGuess = 'i';
+  // //initial guesses for bot based on letter probability
+  // function getBotGuess(guessed, length) {
+  //   let botGuess;
+  //   switch (guessed) {
+  //     case 0:
+  //       if (length === 4) {
+  //         botGuess = 'a';
+  //       }
+  //       else if (length === 5) {
+  //         botGuess = 's';
+  //       } else {
+  //         botGuess = 'e';
+  //       }
+  //       break;
+  //     case 1:
+  //       if (length === 4 || length === 5) {
+  //         botGuess = 'e';
+  //       } else if (length === 6) {
+  //         botGuess = 'a';
+  //       } else {
+  //         botGuess = 'i';
+  //       }
+  //       break;
+  //     case 2:
+  //       if (length === 4 || length > 9) {
+  //         botGuess = 'o';
+  //       } else if (length === 6) {
+  //         botGuess = 'i';
+  //       } else {
+  //         botGuess = 'a';
+  //       }
+  //       break;
+  //     case 3:
+  //       if (length === 4) {
+  //         botGuess = 'i';
 
-        } else if (length < 10 && length > 4) {
-          botGuess = 'o';
-        } else {
-          botGuess = 'a';
-        }
-        break;
-    }
-    return botGuess;
-  }
+  //       } else if (length < 10 && length > 4) {
+  //         botGuess = 'o';
+  //       } else {
+  //         botGuess = 'a';
+  //       }
+  //       break;
+  //   }
+  //   return botGuess;
+  // }
 
-   //format word pattern for api url
-   function convertUrlString(){
-    let guessPtrn =[];
-    $scope.dashArr.forEach((letter, i) => {
-      if (letter === '_') {
-        guessPtrn.push('%3F');
-      } else {
-        guessPtrn.push(letter);
-      }
-    });
-    let guessString = guessPtrn.join('');
-    return guessString;
-  }
+  //  //format word pattern for api url
+  //  function convertUrlString(){
+  //   let guessPtrn =[];
+  //   $scope.dashArr.forEach((letter, i) => {
+  //     if (letter === '_') {
+  //       guessPtrn.push('%3F');
+  //     } else {
+  //       guessPtrn.push(letter);
+  //     }
+  //   });
+  //   let guessString = guessPtrn.join('');
+  //   return guessString;
+  // }
 
 
-  /*
-      $scope.guesssLetter = function (e, word) {
-    
+      $scope.guesssLetter = function (e) {    
         if (e.which === 13) {
-          word = word.toLowerCase();
+         let word = $scope.word.toLowerCase();
           let wordArr = word.split('');
           if ($scope.guess === undefined || $scope.guess === '') {
             console.log('fail', $scope.guess);
@@ -194,7 +174,6 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
             for (let i = 0; i < wordArr.length; i++) {
               if (wordArr[i] === $scope.guess) {
                 correctGuess.push(i);
-                correctLetter.push(i);
               }
             }
             correctGuess.forEach((index) => {
@@ -208,7 +187,6 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
             draw(failures);
         
           }
-          console.log(correctLetter);
     
           $scope.guess = '';
           if ($scope.dashArr.join('') == word) {
@@ -217,11 +195,11 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
         }
     
       }; 
-      */
+    
 
   function end(condition) {
     $timeout(function () {
-      guessed = 0;
+      // letguessed = 0;
       if (condition == 'win') {
         $window.alert('You win Congratulations');
       } else {
