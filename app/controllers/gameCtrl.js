@@ -9,49 +9,19 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
 
 
   $scope.$on('initialized', function(){
-    buildGameArea();
-    buildGuessArea();
+    $scope.showButtons = false;
+    $scope.wrongGuesses = [];
+    GameFactory.buildhangguy(ctx, canvas);
+    
 
   });
 
-  function buildGameArea() {
-    $scope.showButtons = false;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    $scope.dashArr = [];
-    $scope.wrongGuesses = [];
-    ctx.beginPath();
-    //foot
-    ctx.moveTo(0, 300);
-    ctx.lineTo(60, 300);
-    ctx.stroke();
-    //main trunk
-    ctx.moveTo(30, 40);
-    ctx.lineTo(30, 400);
-    ctx.stroke();
+  // function buildGameArea() {
 
-    //line accross top
-    ctx.moveTo(30, 40);
-    ctx.lineTo(150, 40);
-    ctx.stroke();
-
-    //head holder
-    ctx.moveTo(150, 40);
-    ctx.lineTo(150, 70);
-    ctx.stroke();
-  }
+  // }
 
 
-  function buildGuessArea() {
-    console.log($scope.word);
-    //creating word guessing area with dashes subbed for letters
-    for (let i = 0; i < $scope.word.length; i++) {
-      if ($scope.word[i] === '-') {
-        $scope.dashArr.push('-');
-      } else {
-        $scope.dashArr.push('_');
-      }
-    }
-  }
+
 
   //tracked number of letters guessed by bot
   // let guessed = 0;
