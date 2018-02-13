@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, $window, $timeout) {
+angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, $window, $timeout, $rootScope) {
 
 
   var canvas = document.getElementById('myCanvas');
@@ -27,27 +27,23 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
       } else {
         let correctGuess = [];
         for (let i = 0; i < wordArr.length; i++) {
-          if (wordArr[i] === $scope.guess) {
-            correctGuess.push(i);
-          }
+          if (wordArr[i] === $scope.guess) correctGuess.push(i);
         }
         correctGuess.forEach((index) => {
           $scope.dashArr[index] = $scope.guess;
-
         });
-        if (!wordArr.includes($scope.guess)) {
-          $scope.wrongGuesses.push($scope.guess);
-        }
+        if (!wordArr.includes($scope.guess))$scope.wrongGuesses.push($scope.guess);
+
         let failures = $scope.wrongGuesses.length;
         $scope.$parent.draw(failures, ctx);
 
+        $rootScope.$broadcast('botTurn');
+        
       }
 
       $scope.guess = '';
-      if ($scope.dashArr.join('') == word) {
-        $scope.$parent.end('win', 'user');
-      }
+      if ($scope.dashArr.join('') == word) $scope.$parent.end('win', 'user');
     }
-
   };
+
 });

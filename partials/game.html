@@ -1,29 +1,75 @@
-
-
-
-<button ng-click='showButtons=true' ng-hide='showButton'>
-    New Game
-  </button>
+<div>
+  <div id='welcomeDiv' ng-hide='showWelcome'>
+    <pre id='welcome'>
+        ___       __   _______   ___       ________  ________  _____ ______   _______           _________  ________              
+        |\  \     |\  \|\  ___ \ |\  \     |\   ____\|\   __  \|\   _ \  _   \|\  ___ \         |\___   ___\\   __  \             
+        \ \  \    \ \  \ \   __/|\ \  \    \ \  \___|\ \  \|\  \ \  \\\__\ \  \ \   __/|        \|___ \  \_\ \  \|\  \            
+         \ \  \  __\ \  \ \  \_|/_\ \  \    \ \  \    \ \  \\\  \ \  \\|__| \  \ \  \_|/__           \ \  \ \ \  \\\  \           
+          \ \  \|\__\_\  \ \  \_|\ \ \  \____\ \  \____\ \  \\\  \ \  \    \ \  \ \  \_|\ \           \ \  \ \ \  \\\  \          
+           \ \____________\ \_______\ \_______\ \_______\ \_______\ \__\    \ \__\ \_______\           \ \__\ \ \_______\         
+            \|____________|\|_______|\|_______|\|_______|\|_______|\|__|     \|__|\|_______|            \|__|  \|_______|         
+                                                                                                                                  
+                                                                                                                                  
+                                                                                                                                  
+         ___  ___  ________  ________   ________  ________  ________  _________        ________  ________  ________  ________     
+        |\  \|\  \|\   __  \|\   ___  \|\   ____\|\   __  \|\   __  \|\___   ___\     |\  ___  \|\   __  \|\   __  \|\   __  \    
+        \ \  \\\  \ \  \|\  \ \  \\ \  \ \  \___|\ \  \|\ /\ \  \|\  \|___ \  \_|     \ \____   \ \  \|\  \ \  \|\  \ \  \|\  \   
+         \ \   __  \ \   __  \ \  \\ \  \ \  \  __\ \   __  \ \  \\\  \   \ \  \       \|____|\  \ \  \\\  \ \  \\\  \ \  \\\  \  
+          \ \  \ \  \ \  \ \  \ \  \\ \  \ \  \|\  \ \  \|\  \ \  \\\  \   \ \  \          __\_\  \ \  \\\  \ \  \\\  \ \  \\\  \ 
+           \ \__\ \__\ \__\ \__\ \__\\ \__\ \_______\ \_______\ \_______\   \ \__\        |\_______\ \_______\ \_______\ \_______\
+            \|__|\|__|\|__|\|__|\|__| \|__|\|_______|\|_______|\|_______|    \|__|        \|_______|\|_______|\|_______|\|_______|
+                                                                                                                                  
+          </pre>  
+        </div> 
+  <div id='gamepagemain'>
     
-    <div ng-show='showButtons'>
-      <h3 >Select your difficulty</h3>
-      <button ng-click="initialize('easy')">Easy</button>
-      <button ng-click="initialize('med')">Medium</button>
-      <button ng-click="initialize('hard')">Hard</button>
+  <!-- <button ng-click='showButtons=true' ng-hide='showButton'> -->
+      <figure ng-hide='showButton'>
+          <div>
+            <span>{{button}}</span>
+            <span ng-click='switchButtons()'>{{button}}</span>
+          </div>
+        </figure>
+  <!-- </button> -->
+  <div ng-show='showButtons'>
+    <figure>
+      <div class='diff'>
+        <span>Select </span>
+        <span ng-click="initialize('easy')">Easy</span>
+      </div>
+    </figure>
+    <figure>
+      <div class='diff'>
+        <span>Your</span>
+        <span ng-click="initialize('med')">Medium</span>
+      </div>
+    </figure>
+    <figure>
+
+      <div class='diff'>
+        <span>Difficulty </span>
+        <span ng-click="initialize('hard')">Hard</span>
+      </div>
+    </figure>
+    <!-- <button ng-click="initialize('easy')">Easy</button>
+    <button ng-click="initialize('med')">Medium</button>
+    <button ng-click="initialize('hard')">Hard</button> -->
+  </div>
+</div>
+
+
+  <fieldset ng-disabled="isSaving" id='fs'>
+    <div ng-show='showGame' class="flex">
+
+      <!-- COLUMN ONE NAMED VIEW -->
+      <!-- <div class="game"> -->
+      <div ui-view="userGame" class="game"></div>
+
+      <!-- </div> -->
+
+      <!-- <div class="game"> -->
+      <div ui-view="botGame" class="game"></div>
+      <!-- </div> -->
     </div>
-
-
-
-<div ng-show='showGame' class="row">
-
-    <!-- COLUMN ONE NAMED VIEW -->
-    <div class="col-sm-6">
-        <div ui-view="userGame">
-        </div>
-
-    </div>
-
-      <div class="col-sm-6">
-        <div ui-view="botGame"></div>
-    </div>
+  </fieldset>
 </div>

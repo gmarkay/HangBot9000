@@ -2,9 +2,16 @@
 
 angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, $window, $timeout) {
 
+$scope.button = 'Start Game';
 
+$scope.switchButtons = ()=>{
+  $scope.showButtons=true;
+  $scope.showButton = true;
+  $scope.showWelcome = true;
+
+};
 $scope.initialize = (diff) => {
-    $scope.showButton = true;
+  $scope.isSaving = false;
     let minLength;
     let maxLength;
     if (diff === 'easy') {
@@ -39,12 +46,7 @@ $scope.initialize = (diff) => {
       }
     }
   }
-
   $scope.buildGallows = (context, canvas) => {
-    // let context ='';
-    // if(player === 'user'){
-    //    context = ctx;
-    // }
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     context.beginPath();
@@ -136,16 +138,17 @@ $scope.initialize = (diff) => {
 
 
   $scope.end = (condition, player) => {
+    $scope.isSaving = true;
     $timeout(function () {
       // letguessed = 0;
       if (condition == 'win') {
         if(player === 'user'){
         $window.alert('You win Congratulations');
         }else if(player === 'bot'){
-          $window.alert('Hangbot9000 beat you');
+          $window.alert(`Hangbot9000 beat you, the word is:${$scope.word}`);
         }
       } else {
-        $window.alert('You fail');
+        $window.alert(`You fail, the word is: ${$scope.word}` );
 
       }
       $scope.showButton = false;

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $window, $timeout) {
+angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $window, $timeout, $rootScope) {
 
   var botCanvas = document.getElementById('botCanvas');
   var bctx = botCanvas.getContext("2d");
@@ -15,25 +15,26 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
   //tracked number of letters guessed by bot
   let guessed = 0;
 
+  $scope.$on('botTurn', function () {
+    $scope.botGuessLetter();
+  });
+
   $scope.botGuessLetter = () => {
     let word = $scope.word.toLowerCase();
     let wordArr = word.split('');
     if (guessed < 4) {
       $scope.botGuess = getBotGuess(guessed, $scope.botDashArr.length);
       checkCorrect(wordArr);
-
     } else {
       GameFactory.makeGuess(convertUrlString(), $scope.botDashArr, $scope.wrongGuesses)
         .then((highestVal) => {
           $scope.botGuess = highestVal;
           checkCorrect(wordArr);
           if ($scope.botDashArr.join('') == $scope.word) $scope.$parent.end('win', 'bot');
-
         });
     }
     $scope.botGuess = '';
     guessed++;
-
   };
   function checkCorrect(wordArr) {
     if (wordArr.includes($scope.botGuess)) {
@@ -50,6 +51,7 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     //add correct letter to dash array at index in word
     correctGuess.forEach((index) => {
       $scope.botDashArr[index] = $scope.botGuess;
+      // $scope.dashArr[index]
     });
   }
 
@@ -57,11 +59,9 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     //add wrong guess to wrong array and then draw bodypart
     $scope.wrongGuesses.push($scope.botGuess);
     let failures = $scope.wrongGuesses.length;
-
     $scope.$parent.draw(failures, bctx);
 
   }
-
   //initial guesses for bot based on letter probability
   function getBotGuess(guessed, length) {
     let botGuess;

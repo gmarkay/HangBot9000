@@ -5,15 +5,9 @@ hangApp.config(function ($stateProvider, $urlRouterProvider, $qProvider) {
   // $qProvider.errorOnUnhandledRejections(false);
 
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/game');
 
   $stateProvider
-    .state('home', {
-      url: '/home',
-
-
-      templateUrl: 'partials/home.html'
-    })
     .state('game', {
       url: '/game',
       views: {
