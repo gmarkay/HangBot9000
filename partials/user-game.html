@@ -7,21 +7,13 @@
         \ \  \___|\ \  \\\  \ \  \\ \  \   \/  /  /        \ \  \ \  \ \  \\\  \ \  \    \ \  \ \  \ \  \ \  \\ \  \ 
          \ \__\    \ \_______\ \__\\ \__\__/  / /           \ \__\ \__\ \_______\ \__\    \ \__\ \__\ \__\ \__\\ \__\
           \|__|     \|_______|\|__| \|__|\___/ /             \|__|\|__|\|_______|\|__|     \|__|\|__|\|__|\|__| \|__|
-                                        \|___|/                                                                      
-                                                                                                                     
-                                                                                                                     
-                                     
+                                        \|___|/                                                                                                   
   </pre>
 </div>
 <div>
-  <canvas id="myCanvas" width="400px" height="300px">
-
+  <canvas id="myCanvas" class='canvas' width="400px" height="300px">
   </canvas>
-
   <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)">
-
-  <!-- <button ng-click='botGuessLetter(word)'>Guess a letter</button> -->
-
   <div id='wrong'>
     <li ng-repeat='fail in wrongGuesses '>
       {{fail}}

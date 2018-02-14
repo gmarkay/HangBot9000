@@ -1,4 +1,3 @@
-<div>
   <div>
       <pre class='playerName'>
           ___  ___  ________  ________   ________  ________  ________  _________        ________  ________  ________  ________     
@@ -10,14 +9,10 @@
           \|__|\|__|\|__|\|__|\|__| \|__|\|_______|\|_______|\|_______|    \|__|        \|_______|\|_______|\|_______|\|_______|
     </pre>                                                                                                                      
   </div>
+  <div>
     <canvas id="botCanvas" class='canvas' width="400px" height="300px">
     </canvas>
-  
-    <!-- <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)"> -->
-    <!-- <button ng-click="initialize('easy')">Initialize</button>
 
-    <button ng-click='botGuessLetter(word)'>Guess a letter</button>
-     -->
     <div id='wrong' hidden=true>
       <li ng-repeat='fail in wrongGuesses '>
         {{fail}}
@@ -25,7 +20,8 @@
     </div>
   
     <ul id='wordArea'>
-        <!-- <li ng-repeat='row in visibleDashArr track by $index'>{{row}}</li> -->
-       <li ng-repeat='row in botDashArr track by $index'>{{row}}</li>
+       <li ng-class="{' blurry': (row !=='_')}" ng-repeat='row in fakeArray track by $index'>{{row}}</li>
     </ul>
   </div>
+
+ 

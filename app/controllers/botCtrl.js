@@ -51,7 +51,7 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     //add correct letter to dash array at index in word
     correctGuess.forEach((index) => {
       $scope.botDashArr[index] = $scope.botGuess;
-      // $scope.dashArr[index]
+      $scope.fakeArray[index] = 'x';
     });
   }
 

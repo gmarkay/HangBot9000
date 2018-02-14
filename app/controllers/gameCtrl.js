@@ -31,6 +31,7 @@ $scope.initialize = (diff) => {
         $scope.word = randWord;
         $scope.dashArr = [];
         $scope.botDashArr =[];
+        $scope.fakeArray = [];
         buildGuessArea();
         $scope.$broadcast('initialized');
       });
@@ -42,6 +43,7 @@ $scope.initialize = (diff) => {
     for (let i = 0; i < $scope.word.length; i++) {
       if ($scope.word[i] !=='-') {
         $scope.dashArr.push('_');
+        $scope.fakeArray.push('_');
         $scope.botDashArr.push('_');
       }
     }
