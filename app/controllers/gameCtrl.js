@@ -75,7 +75,7 @@ $scope.initialize = (diff) => {
 
 
   $scope.draw = (part, context) => {
-
+    console.log(context.canvas, 'id');
     switch (part) {
       case 1:
         //head
@@ -133,7 +133,9 @@ $scope.initialize = (diff) => {
         context.moveTo(163, 135);
         context.arc(153, 135, 11, 0, Math.PI, true);
         context.stroke();
-        // end('fail');
+        if(context.canvas.id=== 'myCanvas'){
+          $scope.end('fail');
+        }
         break;
     }
   };
@@ -158,3 +160,4 @@ $scope.initialize = (diff) => {
     }, 500);
   };
 });
+

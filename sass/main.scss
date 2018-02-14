@@ -26,8 +26,6 @@ ul{
       flex-wrap: nowrap;
   }
   
-
-  
   .game
   {
     background: #fff;
@@ -87,18 +85,15 @@ span:nth-child(2){color:$color;
 }
 
 #gamepagemain{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  -webkit-transform:translate(-50%,-50%);
-  margin:0;
+  // transform:translate(-50%,-50%);
+  // -webkit-transform:translate(-50%,-50%);
   background: black;
   border-radius: 11%;
+//   flex-grow: 1;
+//   align-self: center;
 }
 body{
   background:$color;
-
 }
 
 .diff{
@@ -115,11 +110,24 @@ body{
   color: white;
 }
 #welcomeDiv{
-  padding-top: 5%;
-  padding-left: 22%;
+  margin-right: 2%;
+  margin-top: 6%;
+  // min-height: 
+  // padding-top: 5%;
+  // padding-left: 22%;
+  // // flex-grow: 1;
+  // align-self: center;
 }
 
 .blurry{
   filter: blur(5px);
 
 }
+#thisDiv{
+   display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-around;
+}
+// }
