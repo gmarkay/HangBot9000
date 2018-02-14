@@ -1,30 +1,72 @@
-<button ng-click='showButtons=true' ng-hide='showButton'>
-{{button}}
-</button>
+<div>
+  <div id='welcomeDiv' ng-hide='showWelcome'>
+    <pre id='welcome'>
+        ___       __   _______   ___       ________  ________  _____ ______   _______           _________  ________              
+        |\  \     |\  \|\  ___ \ |\  \     |\   ____\|\   __  \|\   _ \  _   \|\  ___ \         |\___   ___\\   __  \             
+        \ \  \    \ \  \ \   __/|\ \  \    \ \  \___|\ \  \|\  \ \  \\\__\ \  \ \   __/|        \|___ \  \_\ \  \|\  \            
+         \ \  \  __\ \  \ \  \_|/_\ \  \    \ \  \    \ \  \\\  \ \  \\|__| \  \ \  \_|/__           \ \  \ \ \  \\\  \           
+          \ \  \|\__\_\  \ \  \_|\ \ \  \____\ \  \____\ \  \\\  \ \  \    \ \  \ \  \_|\ \           \ \  \ \ \  \\\  \          
+           \ \____________\ \_______\ \_______\ \_______\ \_______\ \__\    \ \__\ \_______\           \ \__\ \ \_______\         
+            \|____________|\|_______|\|_______|\|_______|\|_______|\|__|     \|__|\|_______|            \|__|  \|_______|         
+                                                                                                                                  
+                                                                                                                                  
+                                                                                                                                  
+         ___  ___  ________  ________   ________  ________  ________  _________        ________  ________  ________  ________     
+        |\  \|\  \|\   __  \|\   ___  \|\   ____\|\   __  \|\   __  \|\___   ___\     |\  ___  \|\   __  \|\   __  \|\   __  \    
+        \ \  \\\  \ \  \|\  \ \  \\ \  \ \  \___|\ \  \|\ /\ \  \|\  \|___ \  \_|     \ \____   \ \  \|\  \ \  \|\  \ \  \|\  \   
+         \ \   __  \ \   __  \ \  \\ \  \ \  \  __\ \   __  \ \  \\\  \   \ \  \       \|____|\  \ \  \\\  \ \  \\\  \ \  \\\  \  
+          \ \  \ \  \ \  \ \  \ \  \\ \  \ \  \|\  \ \  \|\  \ \  \\\  \   \ \  \          __\_\  \ \  \\\  \ \  \\\  \ \  \\\  \ 
+           \ \__\ \__\ \__\ \__\ \__\\ \__\ \_______\ \_______\ \_______\   \ \__\        |\_______\ \_______\ \_______\ \_______\
+            \|__|\|__|\|__|\|__|\|__| \|__|\|_______|\|_______|\|_______|    \|__|        \|_______|\|_______|\|_______|\|_______|
+                                                                                                                                  
+          </pre>  
+        </div> 
+  <div id='gamepagemain'>
+    
+  <!-- <button ng-click='showButtons=true' ng-hide='showButton'> -->
+      <figure ng-hide='showButton'>
+          <div>
+            <span>{{button}}</span>
+            <span ng-click='switchButtons()'>{{button}}</span>
+          </div>
+        </figure>
+  <!-- </button> -->
+  <div ng-show='showButtons'>
+    <figure>
+      <div class='diff'>
+        <span>Select </span>
+        <span ng-click="initialize('easy')">Easy</span>
+      </div>
+    </figure>
+    <figure>
+      <div class='diff'>
+        <span>Your</span>
+        <span ng-click="initialize('med')">Medium</span>
+      </div>
+    </figure>
+    <figure>
 
-<div ng-show='showButtons'>
-  <h3 >Select your difficulty</h3>
-  <button ng-click="initialize('easy')">Easy</button>
-  <button ng-click="initialize('med')">Medium</button>
-  <button ng-click="initialize('hard')">Hard</button>
-</div>
-<div ng-show='showGame'>
-  <canvas id="myCanvas" width="400px" height="300px">
-
-  </canvas>
-
-  <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)">
-  
-  <button ng-click='botGuessLetter(word)'>Guess a letter</button>
-  
-  <div id='wrong'>
-    <li ng-repeat='fail in wrongGuesses '>
-      {{fail}}
-    </li>
+      <div class='diff'>
+        <span>Difficulty </span>
+        <span ng-click="initialize('hard')">Hard</span>
+      </div>
+    </figure>
   </div>
+</div>
 
-  <ul id='wordArea'>
-    <li ng-repeat='row in dashArr track by $index' ng-model='victory' ng-change='victory()'>{{row}}</li>
 
-  </ul>
+  <fieldset ng-disabled="isSaving" id='fs'>
+    <div ng-show='showGame' class="flex">
+
+      <!-- COLUMN ONE NAMED VIEW -->
+      <!-- <div class="game"> -->
+      <div ui-view="userGame" class="game"></div>
+
+      <!-- </div> -->
+
+      <!-- <div class="game"> -->
+      <div ui-view="botGame" class="game"></div>
+      <!-- </div> -->
+    </div>
+  </fieldset>
 </div>

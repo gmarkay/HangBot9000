@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-<head>
 
 </head>
 
@@ -9,15 +8,21 @@
       <div class="col-xs-10 col-xs-offset-1 main-container">
           <link rel="stylesheet" type="text/css" href="css/main.css">
 
-        <div ng-view></div>
+        <div ui-view></div>
     </div>
   <script type="text/javascript" src="lib/node_modules/angular/angular.min.js"></script>
-  <script type="text/javascript" src="lib/node_modules/angular-route/angular-route.min.js"></script>
+  <!-- <script type="text/javascript" src="lib/node_modules/angular-route/angular-route.min.js"></script> -->
+  <!-- https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js -->
+  <script src="lib/node_modules/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+
   <script type="text/javascript" src="app/app.js"></script>
   <script type="text/javascript" src="app/values/wordCreds.js"></script>
 
   <script src=app/factories/gameFactory.js></script>
   <script src='app/controllers/gameCtrl.js'></script>
+  <script src='app/controllers/userCtrl.js'></script>
+  <script src="app/controllers/botCtrl.js"></script>
+
 </body>
 
 </html>

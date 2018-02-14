@@ -11,6 +11,8 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
         .get(`${guessUrl}&minLength=${wordPtrn.length}&maxLength=${wordPtrn.length}&skip=0&limit=3000&api_key=${apiKey}`)
         .then(({ data }) => {
           let results = data.searchResults;
+          console.log(results);
+          console.log(wrongGuesses, 'wgs');
           let filteredResults = removeGuessed(results, wrongGuesses);
           let highestVal = getHighest(wordPtrn, filteredResults);
           resolve(highestVal);
@@ -51,7 +53,6 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
     });
     deleteNaN(alphabet);
     let highest = Object.keys(alphabet).reduce((a, b) => alphabet[a] > alphabet[b] ? a : b);
-
     return highest;
   }
 
