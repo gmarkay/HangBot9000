@@ -13,14 +13,16 @@
     <canvas id="botCanvas" class='canvas' width="400px" height="300px">
     </canvas>
 
-    <div id='wrong' hidden=true>
+    <div id='wrong' ng-show='showDashArr' >
       <li ng-repeat='fail in wrongGuesses '>
         {{fail}}
       </li>
     </div>
   
     <ul id='wordArea'>
-       <li ng-class="{' blurry': (row !=='_')}" ng-repeat='row in fakeArray track by $index'>{{row}}</li>
+        <li ng-show='showDashArr'ng-repeat='row in botDashArr track by $index'>{{row}}</li>
+
+       <li ng-hide='showDashArr'ng-class="{' blurry': (row !=='_')}" ng-repeat='row in fakeArray track by $index'>{{row}}</li>
     </ul>
   </div>
 

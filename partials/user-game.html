@@ -13,12 +13,18 @@
 <div>
   <canvas id="myCanvas" class='canvas' width="400px" height="300px">
   </canvas>
-  <input type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event, word)">
+
+  <input  id-'guessLetter' type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)">
+  <label for="guessLetter">Guess a Letter</label>
   <div id='wrong'>
     <li ng-repeat='fail in wrongGuesses '>
       {{fail}}
     </li>
   </div>
+
+  <button id='guessWord' ng-hide='showGuessWord' ng-click='showGuessWord=true'></button>
+  <label for="guessWord'">Guess the Word</label>
+  <input ng-show='showGuessWord' type="text" ng-model="wordGuess" ng-keypress="guessWord($event)">
 
   <ul id='wordArea'>
     <li ng-repeat='row in dashArr track by $index'>{{row}}</li>
