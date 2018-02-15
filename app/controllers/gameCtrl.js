@@ -26,6 +26,7 @@ $scope.initialize = (diff) => {
     }
     $scope.showButtons = false;
     $scope.showGame = true;
+    $scope.gameOver = false;
     GameFactory.getWord(minLength, maxLength)
       .then(randWord => {
         $scope.word = randWord;
@@ -156,6 +157,7 @@ $scope.initialize = (diff) => {
 
       }
       $scope.showButton = false;
+      $scope.gameOver = true;
       $scope.button = 'Play again';
     }, 500);
   };

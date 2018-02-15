@@ -1,31 +1,30 @@
-<div>
-  <pre class=playerName>
-      ________  ___  ___  ________       ___    ___      ___  ___  ___  ___  _____ ______   ________  ________      
-      |\   __  \|\  \|\  \|\   ___  \    |\  \  /  /|    |\  \|\  \|\  \|\  \|\   _ \  _   \|\   __  \|\   ___  \    
-      \ \  \|\  \ \  \\\  \ \  \\ \  \   \ \  \/  / /    \ \  \\\  \ \  \\\  \ \  \\\__\ \  \ \  \|\  \ \  \\ \  \   
-       \ \   ____\ \  \\\  \ \  \\ \  \   \ \    / /      \ \   __  \ \  \\\  \ \  \\|__| \  \ \   __  \ \  \\ \  \  
-        \ \  \___|\ \  \\\  \ \  \\ \  \   \/  /  /        \ \  \ \  \ \  \\\  \ \  \    \ \  \ \  \ \  \ \  \\ \  \ 
-         \ \__\    \ \_______\ \__\\ \__\__/  / /           \ \__\ \__\ \_______\ \__\    \ \__\ \__\ \__\ \__\\ \__\
-          \|__|     \|_______|\|__| \|__|\___/ /             \|__|\|__|\|_______|\|__|     \|__|\|__|\|__|\|__| \|__|
-                                        \|___|/                                                                                                   
-  </pre>
-</div>
-<div>
-  <canvas id="myCanvas" class='canvas' width="400px" height="300px">
-  </canvas>
 
-  <input  id-'guessLetter' type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)">
-  <label for="guessLetter">Guess a Letter</label>
+<div class='gameArea'>
+  <pre class=playerName>
+        ________  ___  ___  ________       ___    ___      ___  ___  ___  ___  _____ ______   ________  ________      
+        |\   __  \|\  \|\  \|\   ___  \    |\  \  /  /|    |\  \|\  \|\  \|\  \|\   _ \  _   \|\   __  \|\   ___  \    
+        \ \  \|\  \ \  \\\  \ \  \\ \  \   \ \  \/  / /    \ \  \\\  \ \  \\\  \ \  \\\__\ \  \ \  \|\  \ \  \\ \  \   
+         \ \   ____\ \  \\\  \ \  \\ \  \   \ \    / /      \ \   __  \ \  \\\  \ \  \\|__| \  \ \   __  \ \  \\ \  \  
+          \ \  \___|\ \  \\\  \ \  \\ \  \   \/  /  /        \ \  \ \  \ \  \\\  \ \  \    \ \  \ \  \ \  \ \  \\ \  \ 
+           \ \__\    \ \_______\ \__\\ \__\__/  / /           \ \__\ \__\ \_______\ \__\    \ \__\ \__\ \__\ \__\\ \__\
+            \|__|     \|_______|\|__| \|__|\___/ /             \|__|\|__|\|_______|\|__|     \|__|\|__|\|__|\|__| \|__|
+                                          \|___|/                                                                                                   
+    </pre>
   <div id='wrong'>
     <li ng-repeat='fail in wrongGuesses '>
       {{fail}}
     </li>
   </div>
+  <canvas id="myCanvas" class='canvas' width="400px" height="300px">
+  </canvas>
+  <div id='guessingArea' class='input-box' ng-hide='gameOver'>
+    
+    <input placeholder='Guess a Letter'id='guessLetter' type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)" ng-hide='showGuessWord'>
 
-  <button id='guessWord' ng-hide='showGuessWord' ng-click='showGuessWord=true'></button>
-  <label for="guessWord'">Guess the Word</label>
-  <input ng-show='showGuessWord' type="text" ng-model="wordGuess" ng-keypress="guessWord($event)">
-
+    <button id='guessWordBtn' ng-hide='showGuessWord' ng-click='showGuessWord=true'>Guess the Word</button>
+    <!-- <label for="guessWord'">Guess the Word</label> -->
+    <input id='guessWord' placeholder='Guess the Word' ng-show='showGuessWord' type="text" ng-model="wordGuess" ng-keypress="guessWord($event)">
+  </div>
   <ul id='wordArea'>
     <li ng-repeat='row in dashArr track by $index'>{{row}}</li>
 

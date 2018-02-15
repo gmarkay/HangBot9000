@@ -55,17 +55,17 @@
 </div>
 
 
-  <fieldset ng-disabled="isSaving" id='fs' class='gameArea'>
-    <div ng-show='showGame' class='flex'>
+  <fieldset ng-disabled="isSaving" id='fs' class='mainGrid'>
+    <div id='gameBoard'ng-show='showGame' class='flex'>
 
       <!-- COLUMN ONE NAMED VIEW -->
       <!-- <div class="game"> -->
-      <div ui-view="userGame" class="game"></div>
+      <div ui-view="userGame" id='userGame' class="game"></div>
 
       <!-- </div> -->
 
       <!-- <div class="game"> -->
-      <div ui-view="botGame" class="game"></div>
+      <div ui-view="botGame" id='botGame'class="game"></div>
       <!-- </div> -->
     </div>
   </fieldset>

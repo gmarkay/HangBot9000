@@ -17,8 +17,9 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
 
   $scope.guesssLetter = function (e) {
     if (e.which === 13) {
-      let word = $scope.word.toLowerCase();
-      $scope.wordArr = word.split('');
+      $scope.word = $scope.word.toLowerCase();
+      $scope.guess = $scope.guess.toLowerCase();
+      $scope.wordArr = $scope.word.split('');
       if ($scope.guess === undefined || $scope.guess === '') {
       } else if ($scope.dashArr.includes($scope.guess) || $scope.wrongGuesses.includes($scope.guess)) {
         $window.alert(`You already guessed "${$scope.guess}". Guess Again`);
@@ -31,7 +32,7 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
         $rootScope.$broadcast('botTurn');
       }
       $scope.guess = '';
-      if ($scope.dashArr.join('') == word) $scope.$parent.end('win', 'user');
+      if ($scope.dashArr.join('') == $scope.word) $scope.$parent.end('win', 'user');
     }
   };
 
@@ -48,18 +49,19 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
 
   $scope.guessWord = function(e){
     if (e.which === 13) {
-      let word = $scope.word.toLowerCase();
-
-      if(word === $scope.wordGuess.toLowerCase()){
+      console.log($scope.wrongGuesses, 'wrong guesses');
+    $scope.wordGuess = $scope.wordGuess.toLowerCase();
+      if($scope.word === $scope.wordGuess){
         let wordGuessArr = $scope.wordGuess.split('');
         for(let i = 0; i<wordGuessArr.length; i++){
-          getCorrectGuess(wordGuessArr[i], word);
+          getCorrectGuess(wordGuessArr[i]);
         }
         $scope.$parent.end('win', 'user');
 
       }else{
-        $scope.$parent.end('fail', 'user');
-
+        for(let i=$scope.wrongGuesses.length; i < 9; i++){
+          $scope.$parent.draw(i, ctx);
+        }
       }
       $scope.wordGuess = '';
       $scope.showGuessWord=false;
