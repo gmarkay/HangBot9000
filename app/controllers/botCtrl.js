@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $window, $timeout, $rootScope) {
-
   var botCanvas = document.getElementById('botCanvas');
   var bctx = botCanvas.getContext("2d");
 
@@ -12,10 +11,8 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     $scope.showDashArr = false;
   });
 
-
   //tracked number of letters guessed by bot
   let guessed = 0;
-
   $scope.$on('botTurn', function () {
     $scope.botGuessLetter();
   });
@@ -30,15 +27,14 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
       GameFactory.makeGuess(convertUrlString(), $scope.botDashArr, $scope.wrongGuesses)
         .then((result) => {
           $scope.botGuess = result;
-          console.log(result, 'result');
-          if(result.length >1){
+          if (result.length > 1) {
             guessWord();
-          }else{
-          checkCorrect();
+          } else {
+            checkCorrect();
           }
-          if ($scope.botDashArr.join('') == $scope.word){
-           $scope.$parent.end('win', 'bot');
-           $scope.showDashArr = true;
+          if ($scope.botDashArr.join('') == $scope.word) {
+            $scope.$parent.end('win', 'bot');
+            $scope.showDashArr = true;
           }
         });
     }
@@ -46,13 +42,14 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     guessed++;
   };
 
-  function guessWord(){
+  function guessWord() {
     let wordGuess = $scope.botGuess.split('');
-    for (let i =0; i <wordGuess.length; i++){
+    for (let i = 0; i < wordGuess.length; i++) {
       $scope.botDashArr[i] = wordGuess[i];
     }
     $scope.showDashArr = true;
   }
+
   function checkCorrect() {
     if ($scope.wordArr.includes($scope.botGuess)) {
       guessCorrect();
@@ -60,6 +57,7 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
       guessWrong();
     }
   }
+
   function guessCorrect() {
     let correctGuess = [];
     for (let i = 0; i < $scope.wordArr.length; i++) {
@@ -138,5 +136,4 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     let guessString = guessPtrn.join('');
     return guessString;
   }
-
 });

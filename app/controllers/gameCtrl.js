@@ -2,16 +2,16 @@
 
 angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, $window, $timeout) {
 
-$scope.button = 'Start Game';
+  $scope.button = 'Start Game';
 
-$scope.switchButtons = ()=>{
-  $scope.showButtons=true;
-  $scope.showButton = true;
-  $scope.showWelcome = true;
-
-};
-$scope.initialize = (diff) => {
-  $scope.isSaving = false;
+  $scope.switchButtons = () => {
+    $scope.showButtons = true;
+    $scope.showButton = true;
+    $scope.showWelcome = true;
+  };
+  
+  $scope.initialize = (diff) => {
+    $scope.isSaving = false;
     let minLength;
     let maxLength;
     if (diff === 'easy') {
@@ -26,22 +26,22 @@ $scope.initialize = (diff) => {
     }
     $scope.showButtons = false;
     $scope.showGame = true;
+    $scope.gameOver = false;
     GameFactory.getWord(minLength, maxLength)
       .then(randWord => {
         $scope.word = randWord;
         $scope.dashArr = [];
-        $scope.botDashArr =[];
+        $scope.botDashArr = [];
         $scope.fakeArray = [];
         buildGuessArea();
         $scope.$broadcast('initialized');
       });
   };
-  function buildGuessArea() {
 
-    console.log($scope.word);
+  function buildGuessArea() {
     //creating word guessing area with dashes subbed for letters
     for (let i = 0; i < $scope.word.length; i++) {
-      if ($scope.word[i] !=='-') {
+      if ($scope.word[i] !== '-') {
         $scope.dashArr.push('_');
         $scope.fakeArray.push('_');
         $scope.botDashArr.push('_');
@@ -72,10 +72,7 @@ $scope.initialize = (diff) => {
     context.stroke();
   };
 
-
-
   $scope.draw = (part, context) => {
-
     switch (part) {
       case 1:
         //head
@@ -106,16 +103,12 @@ $scope.initialize = (diff) => {
         context.moveTo(150, 215);
         context.lineTo(110, 270);
         context.stroke();
-        // $window.alert('Three More Guess');
-
         break;
       case 6:
         //leg 2
         context.moveTo(150, 215);
         context.lineTo(190, 270);
         context.stroke();
-        // $window.alert('Two More Guesses');
-
         break;
       case 7:
         //eyes
@@ -126,14 +119,15 @@ $scope.initialize = (diff) => {
         context.moveTo(173, 105);
         context.arc(165, 105, 8, 0, 2 * Math.PI);
         context.stroke();
-        // $window.alert('One More Guess');
         break;
       case 8:
         //mouth
         context.moveTo(163, 135);
         context.arc(153, 135, 11, 0, Math.PI, true);
         context.stroke();
-        // end('fail');
+        if (context.canvas.id === 'myCanvas') {
+          $scope.end('fail');
+        }
         break;
     }
   };
@@ -144,17 +138,19 @@ $scope.initialize = (diff) => {
     $timeout(function () {
       // letguessed = 0;
       if (condition == 'win') {
-        if(player === 'user'){
-        $window.alert('You win Congratulations');
-        }else if(player === 'bot'){
+        if (player === 'user') {
+          $window.alert('You win Congratulations');
+        } else if (player === 'bot') {
           $window.alert(`Hangbot9000 beat you, the word is:${$scope.word}`);
         }
       } else {
-        $window.alert(`You fail, the word is: ${$scope.word}` );
+        $window.alert(`You fail, the word is: ${$scope.word}`);
 
       }
       $scope.showButton = false;
+      $scope.gameOver = true;
       $scope.button = 'Play again';
     }, 500);
   };
 });
+
