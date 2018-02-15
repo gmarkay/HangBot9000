@@ -9,6 +9,7 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     $scope.showButtons = false;
     $scope.wrongGuesses = [];
     $scope.$parent.buildGallows(bctx, botCanvas);
+    $scope.showDashArr = false;
   });
 
 
@@ -21,32 +22,48 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
 
   $scope.botGuessLetter = () => {
     let word = $scope.word.toLowerCase();
-    let wordArr = word.split('');
+    $scope.wordArr = word.split('');
     if (guessed < 4) {
       $scope.botGuess = getBotGuess(guessed, $scope.botDashArr.length);
-      checkCorrect(wordArr);
+      checkCorrect();
     } else {
       GameFactory.makeGuess(convertUrlString(), $scope.botDashArr, $scope.wrongGuesses)
-        .then((highestVal) => {
-          $scope.botGuess = highestVal;
-          checkCorrect(wordArr);
-          if ($scope.botDashArr.join('') == $scope.word) $scope.$parent.end('win', 'bot');
+        .then((result) => {
+          $scope.botGuess = result;
+          console.log(result, 'result');
+          if(result.length >1){
+            guessWord();
+          }else{
+          checkCorrect();
+          }
+          if ($scope.botDashArr.join('') == $scope.word){
+           $scope.$parent.end('win', 'bot');
+           $scope.showDashArr = true;
+          }
         });
     }
     $scope.botGuess = '';
     guessed++;
   };
-  function checkCorrect(wordArr) {
-    if (wordArr.includes($scope.botGuess)) {
-      guessCorrect(wordArr);
+
+  function guessWord(){
+    let wordGuess = $scope.botGuess.split('');
+    for (let i =0; i <wordGuess.length; i++){
+      $scope.botDashArr[i] = wordGuess[i];
+    }
+    $scope.showDashArr = true;
+  }
+  function checkCorrect() {
+    if ($scope.wordArr.includes($scope.botGuess)) {
+      guessCorrect();
     } else {
       guessWrong();
     }
   }
-  function guessCorrect(wordArr) {
+  function guessCorrect() {
     let correctGuess = [];
-    for (let i = 0; i < wordArr.length; i++) {
-      if (wordArr[i] === $scope.botGuess) correctGuess.push(i);
+    for (let i = 0; i < $scope.wordArr.length; i++) {
+      if ($scope.wordArr[i] === $scope.botGuess) correctGuess.push(i);
     }
     //add correct letter to dash array at index in word
     correctGuess.forEach((index) => {
