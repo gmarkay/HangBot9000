@@ -1,5 +1,5 @@
-  <div class='gameArea'>
-      <pre class='playerName'>
+<div class='gameArea'>
+  <pre class='playerName'>
           ___  ___  ________  ________   ________  ________  ________  _________        ________  ________  ________  ________     
       |\  \|\  \|\   __  \|\   ___  \|\   ____\|\   __  \|\   __  \|\___   ___\     |\  ___  \|\   __  \|\   __  \|\   __  \    
       \ \  \\\  \ \  \|\  \ \  \\ \  \ \  \___|\ \  \|\ /\ \  \|\  \|___ \  \_|     \ \____   \ \  \|\  \ \  \|\  \ \  \|\  \   
@@ -7,22 +7,20 @@
         \ \  \ \  \ \  \ \  \ \  \\ \  \ \  \|\  \ \  \|\  \ \  \\\  \   \ \  \          __\_\  \ \  \\\  \ \  \\\  \ \  \\\  \ 
          \ \__\ \__\ \__\ \__\ \__\\ \__\ \_______\ \_______\ \_______\   \ \__\        |\_______\ \_______\ \_______\ \_______\
           \|__|\|__|\|__|\|__|\|__| \|__|\|_______|\|_______|\|_______|    \|__|        \|_______|\|_______|\|_______|\|_______|
-    </pre>      
-    <div id='wrong' ng-show='showDashArr' >
-        <li ng-repeat='fail in wrongGuesses '>
-          {{fail}}
-        </li>
-      </div>
-                                                                                                                    
-    <canvas id="botCanvas" class='canvas' width="400px" height="300px">
-    </canvas>
-
- 
-    <ul id='wordArea'>
-        <li ng-show='showDashArr'ng-repeat='row in botDashArr track by $index'>{{row}}</li>
-
-       <li ng-hide='showDashArr'ng-class="{' blurry': (row !=='_')}" ng-repeat='row in fakeArray track by $index'>{{row}}</li>
-    </ul>
+    </pre>
+  <div id='wrong' ng-show='showDashArr'>
+    <li ng-repeat='fail in wrongGuesses '>
+      {{fail}}
+    </li>
   </div>
 
- 
+  <canvas id="botCanvas" class='canvas' width="400px" height="300px">
+  </canvas>
+
+
+  <ul id='wordArea'>
+    <li ng-show='showDashArr' ng-repeat='row in botDashArr track by $index'>{{row}}</li>
+
+    <li ng-hide='showDashArr' ng-class="{' blurry': (row !=='_')}" ng-repeat='row in fakeArray track by $index'>{{row}}</li>
+  </ul>
+</div>

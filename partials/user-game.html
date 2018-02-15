@@ -1,4 +1,3 @@
-
 <div class='gameArea'>
   <pre class=playerName>
         ________  ___  ___  ________       ___    ___      ___  ___  ___  ___  _____ ______   ________  ________      
@@ -18,15 +17,16 @@
   <canvas id="myCanvas" class='canvas' width="400px" height="300px">
   </canvas>
   <div id='guessingArea' class='input-box' ng-hide='gameOver'>
-    
-    <input placeholder='Guess a Letter'id='guessLetter' type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)" ng-hide='showGuessWord'>
 
-    <button id='guessWordBtn' ng-hide='showGuessWord' ng-click='showGuessWord=true'>Guess the Word</button>
-    <!-- <label for="guessWord'">Guess the Word</label> -->
-    <input id='guessWord' placeholder='Guess the Word' ng-show='showGuessWord' type="text" ng-model="wordGuess" ng-keypress="guessWord($event)">
+    <input placeholder='Guess a Letter' id='guessLetter' type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)"
+      ng-hide='showGuessWord'>
+
   </div>
   <ul id='wordArea'>
     <li ng-repeat='row in dashArr track by $index'>{{row}}</li>
 
   </ul>
+
+  <input class='guessW' id='guessWord' placeholder='Guess the Word' type="text" ng-model="wordGuess" ng-keypress="guessWord($event)"
+    ng-hide='gameOver'>
 </div>

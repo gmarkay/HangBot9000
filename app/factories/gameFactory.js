@@ -12,11 +12,11 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
         .then(({ data }) => {
           let results = data.searchResults;
           let filteredResults = removeGuessed(results, wrongGuesses);
-          if(filteredResults.length ===1){
+          if (filteredResults.length === 1) {
             let onlyword = filteredResults[0].word.toLowerCase();
             resolve(onlyword);
-          }else{
-          let highestVal = getHighest(wordPtrn, filteredResults);
+          } else {
+            let highestVal = getHighest(wordPtrn, filteredResults);
             resolve(highestVal);
           }
         });
@@ -30,6 +30,7 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
       }
     }
   }
+
   //remove any words from result that inlude wrongly guessed letters
   function removeGuessed(results, wrongGuesses) {
     for (let x = 0; x < wrongGuesses.length; x++) {
@@ -43,6 +44,7 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
     }
     return results;
   }
+
   //get the total number of times a letter occurs in all matching words
   function getHighest(wordPtrn, results) {
     let alphabet = { a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0, h: 0, i: 0, j: 0, k: 0, l: 0, m: 0, n: 0, o: 0, p: 0, q: 0, r: 0, s: 0, t: 0, u: 0, v: 0, w: 0, x: 0, y: 0, z: 0 };
@@ -58,7 +60,7 @@ angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
     let highest = Object.keys(alphabet).reduce((a, b) => alphabet[a] > alphabet[b] ? a : b);
     return highest;
   }
-
+  
   function getWord(minLength, maxLength) {
     return $q((resolve, reject) => {
       $http

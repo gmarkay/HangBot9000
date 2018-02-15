@@ -19,54 +19,46 @@
            \ \__\ \__\ \__\ \__\ \__\\ \__\ \_______\ \_______\ \_______\   \ \__\        |\_______\ \_______\ \_______\ \_______\
             \|__|\|__|\|__|\|__|\|__| \|__|\|_______|\|_______|\|_______|    \|__|        \|_______|\|_______|\|_______|\|_______|
                                                                                                                                   
-          </pre>  
-        </div> 
-  <div id='gamepagemain'>
-    
-  <!-- <button ng-click='showButtons=true' ng-hide='showButton'> -->
-      <figure ng-hide='showButton'>
-          <div> 
-            <span>{{button}}</span>
-            <span ng-click='switchButtons()'>{{button}}</span>
-          </div>
-        </figure>
-  <!-- </button> -->
-  <div ng-show='showButtons'>
-    <figure>
-      <div class='diff'>
-        <span>Select </span>
-        <span ng-click="initialize('easy')">Easy</span>
-      </div>
-    </figure>
-    <figure>
-      <div class='diff'>
-        <span>Your</span>
-        <span ng-click="initialize('med')">Medium</span>
-      </div>
-    </figure>
-    <figure>
-
-      <div class='diff'>
-        <span>Difficulty </span>
-        <span ng-click="initialize('hard')">Hard</span>
-      </div>
-    </figure>
+          </pre>
   </div>
-</div>
+  <div id='gamepagemain'>
+
+    <!-- <button ng-click='showButtons=true' ng-hide='showButton'> -->
+    <figure ng-hide='showButton'>
+      <div>
+        <span>{{button}}</span>
+        <span ng-click='switchButtons()'>{{button}}</span>
+      </div>
+    </figure>
+    <!-- </button> -->
+    <div ng-show='showButtons'>
+      <figure>
+        <div class='diff'>
+          <span>Select </span>
+          <span ng-click="initialize('easy')">Easy</span>
+        </div>
+      </figure>
+      <figure>
+        <div class='diff'>
+          <span>Your</span>
+          <span ng-click="initialize('med')">Medium</span>
+        </div>
+      </figure>
+      <figure>
+
+        <div class='diff'>
+          <span>Difficulty </span>
+          <span ng-click="initialize('hard')">Hard</span>
+        </div>
+      </figure>
+    </div>
+  </div>
 
 
   <fieldset ng-disabled="isSaving" id='fs' class='mainGrid'>
-    <div id='gameBoard'ng-show='showGame' class='flex'>
-
-      <!-- COLUMN ONE NAMED VIEW -->
-      <!-- <div class="game"> -->
+    <div id='gameBoard' ng-show='showGame' class='flex'>
       <div ui-view="userGame" id='userGame' class="game"></div>
-
-      <!-- </div> -->
-
-      <!-- <div class="game"> -->
-      <div ui-view="botGame" id='botGame'class="game"></div>
-      <!-- </div> -->
+      <div ui-view="botGame" id='botGame' class="game"></div>
     </div>
   </fieldset>
 </div>
