@@ -14,7 +14,7 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
   });
   $scope.guesssLetter = function (e) {
     if (e.which === 13) {
-      $scope.word = $scope.word.toLowerCase();
+      // let word = $scope.word.toLowerCase();
       $scope.guess = $scope.guess.toLowerCase();
       $scope.wordArr = $scope.word.split('');
       if ($scope.guess === undefined || $scope.guess === '') {

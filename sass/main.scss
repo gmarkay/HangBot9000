@@ -3,17 +3,21 @@
   /* Allow the centering to work */
   margin: 0 auto;
 }
+canvas{
+  padding-left: 4%;
+}
+
 
 ul {
-  min-width: 696px;
+  min-width: 1px;
   list-style: none;
   padding-top: 20px;
 }
 
 li {
-  font-size: 47px;
+  font-size: 40px;
   display: inline;
-  margin: 10px;
+  margin: 8px;
   padding: 6px;
 }
 
@@ -24,44 +28,29 @@ li {
   justify-content: space-around;
 }
 
-.mainGrid {
-  grid-column-start: 1;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 4;
-}
-
 .game {
   position: relative;
   background: #fff;
   border: 1px solid black;
-  width: 100%;
-  padding: 3%;
-  margin: 6% 2%;
 }
 
 #gameBoard {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(12, 1fr); // grid-template-rows: repeat(3, 1fr);
   margin-top: 9%;
+  grid-gap: 2%;
 }
 
 #userGame {
   grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column-end: 7;
 }
 
 #botGame {
-  grid-column-start: 4;
-  grid-column-end: 5;
+  grid-column-start: 7;
+  grid-column-end: 13;
 }
 
-// .gameArea {
-//   // display: grid;
-//   // grid-template-columns: repeat(3, 33%);
-//   // grid-template-rows: repeat(3, 33%);
-// }
 #guessingArea {
   position: absolute;
   top: 47%;
@@ -70,6 +59,8 @@ li {
 
 #fs {
   border: none;
+  grid-column: 1/6;
+  grid-row: 1/3;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
@@ -100,7 +91,7 @@ span {
   height: 100%;
   position: absolute;
   box-sizing: border-box;
-  border: 5px solid #fff;
+  border: 1px dashed #fff;
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 50px;
   font-size: 17pt;
@@ -120,7 +111,7 @@ span:nth-child(2) {
   background: #fff;
   transform: rotateX(90deg) translate3d(0, 0, 30px);
   -webkit-transform: rotateX(90deg) translate3d(0, 0, 30px);
-  border: 5px solid black;
+  border: 1px dashed black;
 }
 
 #gamepagemain {
@@ -135,7 +126,7 @@ span:nth-child(2) {
 }
 
 body {
-  background: $color;
+  background: black;
 }
 
 .diff {
@@ -151,14 +142,17 @@ body {
 
 #welcome {
   color: white;
+  display: flex;
+  justify-content: center;
+  margin-right: 8%;
+  margin-top: 5%;
 }
 
 #welcomeDiv {
   grid-column-start: 2;
   grid-column-end: 5;
   grid-row-start: 1;
-  grid-row-end: 2;
-  margin-top: 5%;
+  grid-row-end: 2; // margin-top: 5%;
 }
 
 .blurry {
@@ -173,7 +167,7 @@ body {
 }
 
 #guessLetter {
-  width: 9rem;
+  // width: 9rem;
   text-align: center;
   border-radius: 5px;
   padding: 2%;
