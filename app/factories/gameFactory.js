@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module("Hangman").factory("GameFactory", (WordCreds, $http, $q) => {
-  let apiKey = WordCreds.apiKey;
+angular.module("Hangman").factory("GameFactory", (APICreds, $http, $q) => {
+  let apiKey = APICreds.apiKey;
   let wordUrl = 'http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&minCorpusCount=5&maxCorpusCount=-1&minDictionaryCount=20&maxDictionaryCount=-1';
 
   function makeGuess(urlString, wordPtrn, wrongGuesses) {
