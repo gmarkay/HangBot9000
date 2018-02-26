@@ -8,19 +8,19 @@
          \ \__\ \__\ \__\ \__\ \__\\ \__\ \_______\ \_______\ \_______\   \ \__\        |\_______\ \_______\ \_______\ \_______\
           \|__|\|__|\|__|\|__|\|__| \|__|\|_______|\|_______|\|_______|    \|__|        \|_______|\|_______|\|_______|\|_______|
     </pre>
-  <div id='wrong' ng-show='showDashArr'>
-    <li ng-repeat='fail in wrongGuesses '>
+  <div class='wrong' id='botWrong' ng-show='showDashArr'>
+    <li ng-repeat='fail in wrongGuesses'>
       {{fail}}
     </li>
   </div>
 
-  <canvas id="botCanvas" class='canvas' width="400px" height="300px">
+  <canvas id="botCanvas" class='canvas' width="475px" height="300px">
   </canvas>
 
-
-  <ul id='wordArea'>
+  <ul>
     <li ng-show='showDashArr' ng-repeat='row in botDashArr track by $index'>{{row}}</li>
 
     <li ng-hide='showDashArr' ng-class="{' blurry': (row !=='_')}" ng-repeat='row in fakeArray track by $index'>{{row}}</li>
   </ul>
+
 </div>
