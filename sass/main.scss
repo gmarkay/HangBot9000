@@ -3,19 +3,46 @@
   /* Allow the centering to work */
   margin: 0 auto;
 }
-canvas{
+#wrong{
+  float:right;
+  border: .5px dashed red;
+  margin-right: 5%;
+  display: flex;
+
+}
+#botWrong{
+  float:left;
+  border: .5px dashed red;
+  margin-left: 5%;
+  margin-top: 1.3%;
+  display:flex;
+
+}
+#myCanvas{
   padding-left: 4%;
+}
+#botCanvas{
+  float:right;
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+  margin-right: 4%;
+  margin-top: 1%;
+  // padding-bottom: 6%;
 }
 
 
 ul {
   min-width: 1px;
   list-style: none;
-  padding-top: 20px;
+  // padding-top: 20px;
 }
 
 li {
-  font-size: 40px;
+  font-size: 35px;
   display: inline;
   margin: 8px;
   padding: 6px;

@@ -3,11 +3,12 @@
 angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $window, $timeout, $rootScope) {
   var botCanvas = document.getElementById('botCanvas');
   var bctx = botCanvas.getContext("2d");
-
+  
   $scope.$on('initialized', function () {
     $scope.showButtons = false;
     $scope.wrongGuesses = [];
     $scope.$parent.buildGallows(bctx, botCanvas);
+    let canvasImg = botCanvas.toDataURL();
     $scope.showDashArr = false;
   });
 
