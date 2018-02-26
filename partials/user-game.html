@@ -9,11 +9,12 @@
             \|__|     \|_______|\|__| \|__|\___/ /             \|__|\|__|\|_______|\|__|     \|__|\|__|\|__|\|__| \|__|
                                           \|___|/                                                                                                   
     </pre>
-  <div id='wrong'>
+  <div class='wrong' id='userWrong'>
     <li ng-repeat='fail in wrongGuesses '>
       {{fail}}
     </li>
   </div>
+
   <canvas id="myCanvas" class='canvas' width="250px" height="300px">
   </canvas>
   <div id='guessingArea' class='input-box' ng-hide='gameOver'>
@@ -22,11 +23,9 @@
       ng-hide='showGuessWord'>
 
   </div>
-  <ul id='userWordArea'>
+  <ul>
     <li ng-repeat='row in dashArr track by $index'>{{row}}</li>
-
   </ul>
-
   <input class='guessW' id='guessWord' placeholder='Guess the Word' type="text" ng-model="wordGuess" ng-keypress="guessWord($event)"
     ng-hide='gameOver'>
 </div>

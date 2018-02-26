@@ -3,20 +3,19 @@
   /* Allow the centering to work */
   margin: 0 auto;
 }
-#wrong{
-  float:right;
+.wrong{
   border: .5px dashed red;
-  margin-right: 5%;
   display: flex;
 
 }
+#userWrong{
+  float:right;
+  margin-right: 5%;
+}
 #botWrong{
   float:left;
-  border: .5px dashed red;
   margin-left: 5%;
   margin-top: 1.3%;
-  display:flex;
-
 }
 #myCanvas{
   padding-left: 4%;

@@ -11,7 +11,6 @@ angular.module('Hangman').controller('BotCtrl', function ($scope, GameFactory, $
     let canvasImg = botCanvas.toDataURL();
     $scope.showDashArr = false;
   });
-
   //tracked number of letters guessed by bot
   let guessed = 0;
   $scope.$on('botTurn', function () {
