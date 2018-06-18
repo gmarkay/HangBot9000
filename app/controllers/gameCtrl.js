@@ -41,12 +41,11 @@ angular.module('Hangman').controller('GameCtrl', function ($scope, GameFactory, 
   function buildGuessArea() {
     //creating word guessing area with dashes subbed for letters
     for (let i = 0; i < $scope.word.length; i++) {
-      if ($scope.word[i] !== '-') {
-        $scope.dashArr.push('_');
-        $scope.fakeArray.push('_');
-        $scope.botDashArr.push('_');
-      }
+      if ($scope.word[i] !== '-') $scope.dashArr.push('_');
+      else $scope.dashArr.push($scope.word[i] );      
     }
+    $scope.fakeArray = $scope.dashArr.slice();
+    $scope.botDashArr = $scope.dashArr.slice();
   }
   $scope.buildGallows = (context, canvas) => {
     context.clearRect(0, 0, canvas.width, canvas.height);

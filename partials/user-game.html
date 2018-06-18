@@ -14,9 +14,10 @@
       {{fail}}
     </li>
   </div>
-
+  
   <canvas id="myCanvas" class='canvas' width="250px" height="300px">
   </canvas>
+  <button ng-click='buyALetter()'></button>
   <div id='guessingArea' class='input-box' ng-hide='gameOver'>
 
     <input placeholder='Guess a Letter' id='guessLetter' type="text" maxlength="1" pattern="[A-Za-z]" ng-model='guess' ng-keypress="guesssLetter($event)"

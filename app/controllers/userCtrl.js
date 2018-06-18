@@ -10,36 +10,36 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
     $scope.showButtons = false;
     $scope.wrongGuesses = [];
     $scope.$parent.buildGallows(ctx, canvas);
+    $scope.wordArr = $scope.word.toLowerCase().split('');
 
   });
   $scope.guesssLetter = function (e) {
     if (e.which === 13) {
-      let word = $scope.word.toLowerCase();
-      $scope.wordArr = $scope.word.split('');
-      if ($scope.guess === undefined || $scope.guess === '') {
-      } else if ($scope.dashArr.includes($scope.guess) || $scope.wrongGuesses.includes($scope.guess)) {
+      $scope.guess = $scope.guess.toLowerCase();
+      if (!$scope.guess) $window.alert(`Please Enter a Letter`);
+      else if ($scope.dashArr.includes($scope.guess) || $scope.wrongGuesses.includes($scope.guess)) {
         $window.alert(`You already guessed "${$scope.guess}". Guess Again`);
       } else {
         if (!$scope.wordArr.includes($scope.guess)) $scope.wrongGuesses.push($scope.guess);
-        let guess = $scope.guess;
-        getCorrectGuess(guess);
+        getCorrectGuess($scope.guess);
         let failures = $scope.wrongGuesses.length;
         $scope.$parent.draw(failures, ctx);
         $rootScope.$broadcast('botTurn');
       }
       $scope.guess = '';
       if ($scope.dashArr.join('') == $scope.word) $scope.$parent.end('win', 'user');
+
     }
   };
 
   function getCorrectGuess(guess) {
     let correctGuess = [];
     for (let i = 0; i < $scope.wordArr.length; i++) {
-      if ($scope.wordArr[i] === guess) correctGuess.push(i);
+      if ($scope.wordArr[i] === guess){
+      correctGuess.push(i);
+      $scope.dashArr[i] = guess;
+      }
     }
-    correctGuess.forEach((index) => {
-      $scope.dashArr[index] = guess;
-    });
   }
 
   $scope.guessWord = function (e) {
@@ -60,4 +60,19 @@ angular.module('Hangman').controller('UserCtrl', function ($scope, GameFactory, 
       $scope.showGuessWord = false;
     }
   };
+  $scope.buyALetter = () => {
+    let buyArr = $scope.wordArr.map(item => item);
+
+    for (let i = 0; i < $scope.wordArr.length; i++) {
+      for (let j = 0; j < $scope.dashArr.length; j++) {
+        if ($scope.wordArr[i] === $scope.dashArr[j]) {
+          buyArr = buyArr.filter(l => l !== $scope.wordArr[i]);
+
+        }
+      }
+    }
+    let bought = buyArr[Math.floor(Math.random() * buyArr.length)];
+    getCorrectGuess(bought);
+  };
+
 });
